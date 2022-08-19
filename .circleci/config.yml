@@ -41,7 +41,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [frontend-build]
+          keys: [frontend-test]
       - run:
           name: Run frontend test
           command: |
@@ -50,7 +50,7 @@ jobs:
             npm run test
       - save_cache:
           paths: [frontend/node_modules]
-          key: frontend-build
+          key: frontend-test
 
     test-backend:
       docker:
@@ -58,7 +58,7 @@ jobs:
       steps:
         - checkout
         - restore_cache:
-            key: [backend-build]
+            keys: [backend-test]
         - run:
             name: Run backend test
             command: |
@@ -67,7 +67,7 @@ jobs:
               npm run test
         - save_cache:
             paths: [backend/node_modules]
-            key: backend-build
+            key: backend-test
 workflows:
   default:
     jobs:
