@@ -115,7 +115,8 @@ jobs:
 workflows:
   default:
     jobs:
-      - build-frontend
+      - build-frontend:
+          context: udacity
       - build-backend
       - test-frontend:
           requires: [build-frontend]
