@@ -17,9 +17,10 @@ jobs:
             cd frontend
             npm install
             npm run build
+            exit 1
       - slack/notify:
           event: fail
-          mentions: "@devops"
+          mentions: "@develop"
           template: basic_fail_1
       - slack/notify:
           event: pass
