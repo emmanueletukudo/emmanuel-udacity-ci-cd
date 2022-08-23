@@ -242,6 +242,11 @@ jobs:
               # If you are using kvdb.io, generate the bucket ID "9GE4jRtKznmVKRfvdBABBe" in your local terminal first
               curl https://kvdb.io/C7QWz7FG1nPfCno61kMtGG/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
             fi
+      - run:
+          name: View logs
+          command: |
+            cat ~/circleci/.npm/_logs/2022-08-23T15_28_43_699Z-debug.log
+
       - destroy-environment:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
 workflows:
