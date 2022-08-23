@@ -174,19 +174,24 @@ jobs:
       - image: python:3.7-alpine3.11
     steps:
       - checkout
+      - run: apk add --update tar gzip curl
+      - attach_workspace:
+          at: ~/
       - add_ssh_keys:
           fingerprints: ["00:a5:12:bb:43:0c:61:2d:c4:cd:89:60:6c:5d:ed:36"]
-      - attach_workspace:
-          at: .
-      - run:
-          name: View content of inventory.txt
-          command: cat .circleci/ansible/inventory.txt
       - run:
           name: Install dependencies
           command: |
             apk add --update ansible
-            pip install awscli
+            pip3 install awscli
             aws --version
+      - run:
+          name: Reboot
+          command: |
+            reboot
+      - run:
+          name: View content of inventory.txt
+          command: cat .circleci/ansible/inventory.txt
       - run:
           name: Configure server
           command: |
