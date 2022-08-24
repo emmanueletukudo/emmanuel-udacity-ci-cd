@@ -171,11 +171,17 @@ jobs:
       - image: python:3.7-alpine3.11
     steps:
       - checkout
-      - run: apk add --update --no-cache tar gzip ansible curl aws-cli
+      - run: apk add --update --no-cache tar gzip curl
       - attach_workspace:
           at: ~/
       - add_ssh_keys:
           fingerprints: ["00:a5:12:bb:43:0c:61:2d:c4:cd:89:60:6c:5d:ed:36"]
+      - run:
+          name: Install awscli
+          command: |
+            apk add --update ansible
+            pip3 install awscli
+            aws --version
       - run:
           name: View content of inventory.txt
           command: cat .circleci/ansible/inventory.txt
@@ -194,7 +200,7 @@ jobs:
             echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> ~/project/backend/.env
             cat ~/project/backend/.env
 
-            cd ~/project/.circleci/ansible
+            cd ~project/circleci/ansible
             ansible-playbook -i inventory.txt configure-server.yml \
 
       - persist_to_workspace:
@@ -211,12 +217,10 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install dependences
+          name: Install awscli
           command: |
-            sudo apt-get install -y tar gzip curl
-            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            unzip -qq awscliv2.zip
-            sudo ./aws/install
+            sudo apt-get update -y
+            sudo apt-get install awscli -y
       - restore_cache:
           keys: [backend-build]
       - run:
