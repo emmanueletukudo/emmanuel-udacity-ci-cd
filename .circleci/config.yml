@@ -236,6 +236,10 @@ jobs:
               sudo apt-get update && sudo apt-get install -y ca-certificates
               curl https://kvdb.io/WoBxgQEvnjPqvKaGJ4ZMnZ/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
             fi
+      - run:
+          name: show logs
+          command: |
+            cat ~/circleci/.npm/_logs/2022-08-24T09_32_50_083Z-debug.log
 
       - destroy-environment:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
