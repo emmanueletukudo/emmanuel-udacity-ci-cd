@@ -223,7 +223,7 @@ jobs:
       - checkout
       # - install-aws
       - add_ssh_keys:
-          fingerprints: ["00:a5:12:bb:43:0c:61:2d:c4:cd:89:60:6c:5d:ed:36"]
+          fingerprints: ["c8:4e:1e:12:8c:14:60:ce:8d:ac:93:d5:30:4b:f9:c7"]
       - attach_workspace:
           at: ~/
       - run:
@@ -340,7 +340,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - "00:a5:12:bb:43:0c:61:2d:c4:cd:89:60:6c:5d:ed:36"
+            - "c8:4e:1e:12:8c:14:60:ce:8d:ac:93:d5:30:4b:f9:c7"
       - run:
           name: Install dependencies
           command: |
