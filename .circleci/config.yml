@@ -15,6 +15,28 @@ commands:
             aws cloudformation delete-stack --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
             aws cloudformation delete-stack --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
 
+  revert-migrations:
+    description: Revert the last migration if successfully run in the current workflow.
+    parameters:
+      # Add parameter here
+      workflow_id:
+        default: "${CIRCLE_WORKFLOW_ID:0:7}"
+        type: string
+    steps:
+      - run:
+          name: Revert migrations
+          when: on_fail
+          # Add when this will run
+          command: |
+            # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
+            SUCCESS=$(curl --insecure "https://kvdb.io/WoBxgQEvnjPqvKaGJ4ZMnZ/migration_<<parameters.workflow_id>>")
+            if(( $SUCCESS==1 ));
+            then
+              cd ~/project/backend
+              npm install
+              npm run migrations:revert
+            fi
+
 orbs:
   slack: circleci/slack@4.1
 
@@ -242,7 +264,7 @@ jobs:
             if grep -q "success" ~/project/backend/migrations.txt
             then
               sudo apt-get update && sudo apt-get install -y ca-certificates
-              curl https://kvdb.io/WoBxgQEvnjPqvKaGJ4ZMnZ/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
+              curl -k https://kvdb.io/WoBxgQEvnjPqvKaGJ4ZMnZ/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
             fi
       - destroy-environment:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
