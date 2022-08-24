@@ -1,49 +1,30 @@
 ---
-- name: Run "apt-get update"
-  become: yes
-  apt: update_cache=true
+- name: "update apt packages."
+  become: true
+  apt:
+    update_cache: yes
 
 - name: "upgrade packages"
   become: true
   apt:
-    upgrade: True
+    upgrade: yes
 
-- name: remove dependencies that are no longer required
-  become: yes
+- name: "remove dependencies"
+  become: true
   apt:
     autoremove: yes
 
-- name: "install dependencies."
-  become: yes
+- name: "install node and NPM"
+  become: true
   apt:
-    name: ["tar", "gzip", "ansible", "awscli", "curl"]
+    name: ["nodejs", "npm"]
     state: latest
     update_cache: yes
 
-- name: "Add nodejs apt key"
-  apt_key:
-    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
-    state: present
-
-- name: "Add nodejs 13.x ppa for apt repo "
-  apt_repository:
-    repo: deb https://deb.nodesource.com/node_13.x focal main
-    update_cache: yes
-
-- name: "Install nodejs & npm"
-  apt:
-    update_cache: yes
-    name: ["nodejs", "npm"]
-    state: present
-
-- name: install PM2
+- name: "Install pm2"
+  become: true
   npm:
     name: pm2
     global: yes
     production: yes
-    state: latest
-
-- name: "pm2 Start"
-  shell: |
-    pm2 stop default
-    pm2 start npm -- start
+    state: present
