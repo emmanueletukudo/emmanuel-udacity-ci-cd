@@ -1,0 +1,3 @@
+https://github.com/emmanueletukudo/emmanuel-udacity-ci-cd
+https://54.205.138.97:3030/api/status
+https://udapeople-007c340.s3.amazonaws.com/index.html#/employees
