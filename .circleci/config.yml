@@ -427,32 +427,20 @@ jobs:
       - run:
           name: Get old stack workflow id
           command: |
-            # export OldWorkflowID=$(aws cloudformation list-exports --query "Exports[?Name==\`WorkflowID\`].Value" --no-paginate --output text)
-            # echo OldWorkflowID: "${OldWorkflowID}"
-            # echo CIRCLE_WORKFLOW_ID "${CIRCLE_WORKFLOW_ID:0:7}"
-            # export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" --stack-status-filter CREATE_COMPLETE --no-paginate --output text))
-            # echo Stack names: "${STACKS[@]}"
-            # if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
-            # then
-            #   echo "Deleted Blue Deployment"
-            #   aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
-            #   aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
-            #   aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
-            # else
-            #   echo "No blue deployment available"
-            # fi
-
-            OldWorkflowID=$(curl --insecure https://kvdb.io/FB4P5zoVABgYfhH8zajZUm/udapeople_old_workflow_id)
-              CurrentWorkflowID=${CIRCLE_WORKFLOW_ID:0:5}
-
-              echo "Old Workflow ID: $OldWorkflowID"
-              echo "Current Workflow ID: $CurrentWorkflowID"
-              if [[ "$CurrentWorkflowID" != "$OldWorkflowID"  ]]
-              then
-                aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
-                aws cloudformation delete-stack --stack-name "backend-${OldWorkflowID}"
-                aws cloudformation delete-stack --stack-name "frontend-${OldWorkflowID}"
-              fi
+            export OldWorkflowID=$(aws cloudformation list-exports --query "Exports[?Name==\`WorkflowID\`].Value" --no-paginate --output text)
+            echo OldWorkflowID: "${OldWorkflowID}"
+            echo CIRCLE_WORKFLOW_ID "${CIRCLE_WORKFLOW_ID:0:7}"
+            export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" --stack-status-filter CREATE_COMPLETE --no-paginate --output text))
+            echo Stack names: "${STACKS[@]}"
+            if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
+            then
+              echo "Deleted Blue Deployment"
+              aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
+              aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
+              aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
+            else
+              echo "No blue deployment available"
+            fi
 workflows:
   default:
     jobs:
