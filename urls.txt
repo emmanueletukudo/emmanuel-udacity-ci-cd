@@ -1,4 +1,4 @@
 https://github.com/emmanueletukudo/emmanuel-udacity-ci-cd
-https://52.21.185.231:3030/api/status
-https://udapeople-007c340.s3.amazonaws.com/index.html#/employees
+http://44.201.252.229:3030/api/status
+http://udapeople-d0e6958.s3-website.us-east-1.amazonaws.com/#/employees
 
