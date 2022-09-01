@@ -411,10 +411,6 @@ jobs:
             --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:5}" \
             --tags project=udapeople
 
-            aws cloudfront create-invalidation \
-            --distribution-id $DISTRO_ID \
-            --paths "/*"
-
             curl -k https://kvdb.io/Qd15cuuKbePuwHBULFgt9g/udapeople_old_workflow_id -d "${OldWorkflowID}"
       - destroy-environment:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
