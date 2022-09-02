@@ -429,8 +429,8 @@ jobs:
       - run:
           name: Get old stack workflow id
           command: |
-            cat OldWorkflowID.text
-            OldWorkflowID=$(cat OldWorkflowID.text)
+            cat ~/OldWorkflowID.text
+            OldWorkflowID=$(cat ~/OldWorkflowID.text)
             echo OldWorkflowID: "${OldWorkflowID}"
             echo $OldWorkflowID
 
